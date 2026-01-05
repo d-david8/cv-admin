@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Add Experience – ' . $profile->name)
+@section('title', 'Add Education – ' . $profile->name)
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 py-6">
@@ -8,7 +8,7 @@
     <!-- HEADER -->
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-3xl font-bold">
-            Add Experience
+            Add Education
             <span class="text-gray-400 text-lg font-normal">
                 – {{ $profile->name }}
             </span>
@@ -32,36 +32,44 @@
     @endif
 
     <!-- FORM -->
-    <form action="{{ route('profiles.experiences.store', $profile) }}"
+    <form action="{{ route('profiles.educations.store', $profile) }}"
           method="POST"
           class="bg-white shadow rounded-2xl p-6 space-y-6">
         @csrf
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-                <label class="font-medium">Company</label>
-                <input type="text" name="company"
+                <label class="font-medium">School</label>
+                <input type="text"
+                       name="school"
+                       value="{{ old('school') }}"
                        class="w-full border rounded-lg px-3 py-2"
                        required>
             </div>
 
             <div>
-                <label class="font-medium">Role</label>
-                <input type="text" name="role"
+                <label class="font-medium">Degree</label>
+                <input type="text"
+                       name="degree"
+                       value="{{ old('degree') }}"
                        class="w-full border rounded-lg px-3 py-2"
                        required>
             </div>
 
             <div>
                 <label class="font-medium">Start Date</label>
-                <input type="date" name="start_date"
+                <input type="date"
+                       name="start_date"
+                       value="{{ old('start_date') }}"
                        class="w-full border rounded-lg px-3 py-2"
                        required>
             </div>
 
             <div>
                 <label class="font-medium">End Date</label>
-                <input type="date" name="end_date"
+                <input type="date"
+                       name="end_date"
+                       value="{{ old('end_date') }}"
                        class="w-full border rounded-lg px-3 py-2">
             </div>
         </div>
@@ -70,35 +78,13 @@
             <label class="font-medium">Description</label>
             <textarea name="description"
                       rows="4"
-                      class="w-full border rounded-lg px-3 py-2"></textarea>
-        </div>
-
-        <!-- TECH STACK SELECT -->
-        <div>
-            <label class="font-medium block mb-2">Tech Stack</label>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                @foreach($techstacks as $tech)
-                    <label class="flex items-center gap-2 bg-gray-50 border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-100">
-                        <input type="checkbox"
-                               name="techstacks[]"
-                               value="{{ $tech->id }}"
-                               class="rounded text-indigo-600">
-                        <span>
-                            {{ $tech->name }}
-                            <span class="text-xs text-gray-500">
-                                ({{ $tech->level ?? '' }})
-                            </span>
-                        </span>
-                    </label>
-                @endforeach
-            </div>
+                      class="w-full border rounded-lg px-3 py-2">{{ old('description') }}</textarea>
         </div>
 
         <div class="flex justify-end">
             <button type="submit"
                     class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow">
-                Save Experience
+                Save Education
             </button>
         </div>
     </form>

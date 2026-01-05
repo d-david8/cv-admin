@@ -56,6 +56,7 @@ class ProfileController extends Controller
     public function show(Profile $profile)
     {
         $profile->load('experiences');
+        $profile->load('educations');
         return view('admin.profiles.show', compact('profile'));
     }
 

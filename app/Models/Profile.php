@@ -29,4 +29,9 @@ class Profile extends Model
     {
         return $this->hasMany(Experience::class)->orderBy('start_date', 'desc');
     }
+    // Relationship: Profile has many Educations
+    public function educations()
+    {
+        return $this->hasMany(Education::class)->orderBy('start_date', 'desc');
+    }
 }

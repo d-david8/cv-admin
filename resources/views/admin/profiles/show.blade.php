@@ -123,6 +123,19 @@
                                 {{ $exp->description }}
                             </p>
                         @endif
+
+                        @if($exp->techstacks->isNotEmpty())
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                @foreach($exp->techstacks as $tech)
+                                    <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-bold">
+                                        {{ $tech->name }}
+                                        @if($tech->level)
+                                            <span class="opacity-70">• {{ $tech->level }}</span>
+                                        @endif
+                                    </span>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                     <div class="flex gap-2 shrink-0">
@@ -148,6 +161,69 @@
             </div>
         @endforelse
     </div>
+
+    <!-- Education -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10 mb-4">
+        <h2 class="text-2xl font-bold">Education</h2>
+
+        <a href="{{ route('profiles.educations.create', $profile) }}"
+        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow-sm transition">
+            + Add Education
+        </a>
+    </div>
+
+    <div class="space-y-4">
+        @forelse($profile->educations as $edu)
+            <div class="bg-white rounded-2xl shadow p-6">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+
+                    <div>
+                        <h3 class="text-lg font-semibold">
+                            {{ $edu->degree }}
+                            <span class="text-indigo-600">@ {{ $edu->school }}</span>
+                        </h3>
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            {{ \Carbon\Carbon::parse($edu->start_date)->format('M Y') }}
+                            –
+                            {{ $edu->end_date
+                                ? \Carbon\Carbon::parse($edu->end_date)->format('M Y')
+                                : 'Present'
+                            }}
+                        </p>
+
+                        @if($edu->description)
+                            <p class="mt-3 text-gray-700 leading-relaxed">
+                                {{ $edu->description }}
+                            </p>
+                        @endif
+                    </div>
+
+                    <div class="flex gap-2 shrink-0">
+                        <a href="{{ route('educations.edit', $edu) }}"
+                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded transition">
+                            Edit
+                        </a>
+
+                        <form action="{{ route('educations.destroy', $edu) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded transition">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        @empty
+            <div class="bg-white rounded-2xl shadow p-6 text-center text-gray-500">
+                No education added yet.
+            </div>
+        @endforelse
+    </div>
+
+
 
 </div>
 

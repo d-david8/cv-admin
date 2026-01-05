@@ -31,35 +31,52 @@ class ExperienceController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
             'description' => 'nullable|string',
-            'techstack' => 'nullable|string',
+            'techstacks' => 'nullable|array',
+            'techstacks.*' => 'exists:techstacks,id',
         ]);
 
-        $profile->experiences()->create($data);
-        return redirect()->route('profiles.show', $profile)->with('success', 'Experience added successfully!');
+        $experience = $profile->experiences()->create($data);
+
+        if (!empty($data['techstacks'])) {
+            echo "Attached techstacks: " . implode(',', $data['techstacks']);
+            $experience->techstacks()->sync($request->input('techstacks'));
+            
+        }
+
+        return redirect()
+            ->route('profiles.show', $profile)
+            ->with('success', 'Experience added');
     }
+
 
 
     public function edit(Experience $experience)
     {
         $profiles = Profile::all();
-        return view('admin.experiences.edit', compact('experience', 'profiles'));
+        $techstacks = $experience->profile->techstacks;
+        return view('admin.experiences.edit', compact('experience', 'profiles', 'techstacks'));
     }
 
     public function update(Request $request, Experience $experience)
     {
-        $data = $request->validate([
-            'profile_id' => 'required|exists:profiles,id',
+        $validated = $request->validate([
             'company' => 'required|string|max:255',
             'role' => 'required|string|max:255',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
             'description' => 'nullable|string',
-            'techstack' => 'nullable|string',
+            'techstacks' => 'array'
         ]);
 
-        $experience->update($data);
-        return redirect()->route('profiles.show', $experience->profile_id)->with('success', 'Experience updated successfully!');
+        $experience->update($validated);
+
+        $experience->techstacks()->sync($request->techstacks ?? []);
+
+        return redirect()
+            ->route('profiles.show', $experience->profile)
+            ->with('success', 'Experience updated successfully.');
     }
+
 
     public function destroy(Experience $experience)
     {

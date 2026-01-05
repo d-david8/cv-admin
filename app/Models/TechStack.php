@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 // TechStack Model representing a technology stack used in experiences and projects
-class TechStack extends Model
+class Techstack extends Model
 {
+    use HasFactory;
+
+    protected $table = 'techstacks';
+
     // Mass assignable attributes
     protected $fillable = [
         'profile_id',

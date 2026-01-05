@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // 1️⃣ profiles
+        // Profile related tables for CV management
         Schema::create('profiles', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 2️⃣ educations
+        // Educations
         Schema::create('educations', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
         });
 
-        // 3️⃣ experiences
+        // Experiences
         Schema::create('experiences', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
@@ -52,7 +52,7 @@ return new class extends Migration
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
         });
 
-        // 4️⃣ projects
+        // Projects
         Schema::create('projects', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
@@ -67,8 +67,8 @@ return new class extends Migration
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
         });
 
-        // 5️⃣ tech_stacks
-        Schema::create('tech_stacks', function (Blueprint $table) {
+        // Techstacks
+        Schema::create('techstacks', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
             $table->unsignedBigInteger('profile_id');
@@ -79,36 +79,39 @@ return new class extends Migration
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
         });
 
-        // 6️⃣ project_techstack (pivot)
+        // Pivot table: project_techstack
         Schema::create('project_techstack', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
             $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('tech_stack_id');
+            $table->unsignedBigInteger('techstack_id');
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('tech_stack_id')->references('id')->on('tech_stacks')->onDelete('cascade');
+            $table->foreign('techstack_id')->references('id')->on('techstacks')->onDelete('cascade');
         });
 
-        // 7️⃣ experience_techstack (pivot)
+        // Pivot table: experience_techstack
         Schema::create('experience_techstack', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
             $table->unsignedBigInteger('experience_id');
-            $table->unsignedBigInteger('tech_stack_id');
+            $table->unsignedBigInteger('techstack_id');
             $table->timestamps();
 
             $table->foreign('experience_id')->references('id')->on('experiences')->onDelete('cascade');
-            $table->foreign('tech_stack_id')->references('id')->on('tech_stacks')->onDelete('cascade');
+            $table->foreign('techstack_id')->references('id')->on('techstacks')->onDelete('cascade');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('experience_techstack');
         Schema::dropIfExists('project_techstack');
-        Schema::dropIfExists('tech_stacks');
+        Schema::dropIfExists('techstacks');
         Schema::dropIfExists('projects');
         Schema::dropIfExists('experiences');
         Schema::dropIfExists('educations');
