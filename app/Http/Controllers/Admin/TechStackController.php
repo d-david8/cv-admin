@@ -21,12 +21,13 @@ class TechStackController extends Controller
         $techstacks = $profile->techstacks;
         return view('admin.techstacks.index', compact('profile', 'techstacks'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create(Profile $profile)
     {
-        return view('admin.techstacks.index', compact('profile'));
+        //
     }
 
     /**
@@ -41,9 +42,7 @@ class TechStackController extends Controller
 
         $profile->techstacks()->create($data);
 
-        return redirect()
-            ->route('profiles.techstacks.index', $profile)
-            ->with('success', 'Tech stack added');
+        return redirect()->route('profiles.techstacks.index', $profile)->with('success', 'Tech stack added successfully!');
     }
 
     /**
@@ -51,7 +50,7 @@ class TechStackController extends Controller
      */
     public function edit(TechStack $techstack)
     {
-        return view('admin.techstacks.edit', compact('techstack'));
+        //
     }
 
     /**
@@ -59,14 +58,7 @@ class TechStackController extends Controller
      */
     public function update(Request $request, TechStack $techstack)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'level' => 'nullable|string|max:50',
-        ]);
-
-        $techstack->update($data);
-
-        return back()->with('success', 'Tech stack updated');
+        //
     }
 
     /**
@@ -77,7 +69,6 @@ class TechStackController extends Controller
         $profileId = $techstack->profile_id;
         $techstack->delete();
 
-        return redirect()->route('profiles.techstacks.index', $profileId)
-            ->with('success', 'Tech stack deleted successfully!');
+        return redirect()->route('profiles.techstacks.index', $profileId)->with('success', 'Tech stack deleted successfully!');
     }
 }

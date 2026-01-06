@@ -16,7 +16,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = \App\Models\Profile::all();
+        $profiles = Profile::all();
         return view('admin.profiles.index', compact('profiles'));
     }
 
@@ -44,8 +44,7 @@ class ProfileController extends Controller
             'summary' => 'nullable|string',
         ]);
 
-        \App\Models\Profile::create($request->all());
-
+        Profile::create($request->all());
         return redirect()->route('profiles.index')->with('success', 'Profile added successfully.');
     }
 
@@ -57,6 +56,7 @@ class ProfileController extends Controller
     {
         $profile->load('experiences');
         $profile->load('educations');
+        $profile->load('projects');
         return view('admin.profiles.show', compact('profile'));
     }
 
@@ -66,7 +66,7 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $profile = \App\Models\Profile::findOrFail($id);
+        $profile = Profile::findOrFail($id);
         return view('admin.profiles.edit', compact('profile'));
     }
 
@@ -75,7 +75,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $profile = \App\Models\Profile::findOrFail($id);
+        $profile = Profile::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -88,7 +88,6 @@ class ProfileController extends Controller
         ]);
 
         $profile->update($request->all());
-
         return redirect()->route('profiles.index')->with('success', 'Profile updated successfully.');
     }
 
@@ -97,10 +96,9 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        $profile = \App\Models\Profile::findOrFail($id);
+        $profile = Profile::findOrFail($id);
         $profile->delete();
 
-        return redirect()->route('profiles.index')
-                        ->with('success', 'Profile deleted successfully.');
+        return redirect()->route('profiles.index')->with('success', 'Profile deleted successfully.');
     }
 }

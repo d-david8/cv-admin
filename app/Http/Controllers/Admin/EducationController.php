@@ -30,7 +30,7 @@ class EducationController extends Controller
      */
     public function store(Request $request, Profile $profile)
     {
-        $validated = $request->validate([
+        $data = $request->validate([
             'school' => 'required|string|max:255',
             'degree' => 'required|string|max:255',
             'start_date' => 'required|date',
@@ -38,11 +38,8 @@ class EducationController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $profile->educations()->create($validated);
-
-        return redirect()
-            ->route('profiles.show', $profile)
-            ->with('success', 'Education added successfully.');
+        $profile->educations()->create($data);
+        return redirect()->route('profiles.show', $profile)->with('success', 'Education added successfully.');
     }
 
 
@@ -68,7 +65,7 @@ class EducationController extends Controller
      */
     public function update(Request $request, Education $education)
     {
-        $validated = $request->validate([
+        $data = $request->validate([
             'school' => 'required|string|max:255',
             'degree' => 'required|string|max:255',
             'start_date' => 'required|date',
@@ -76,11 +73,8 @@ class EducationController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $education->update($validated);
-
-        return redirect()
-            ->route('profiles.show', $education->profile)
-            ->with('success', 'Education updated successfully.');
+        $education->update($data);
+        return redirect()->route('profiles.show', $education->profile)->with('success', 'Education updated successfully.');
     }
 
     /**
@@ -91,8 +85,6 @@ class EducationController extends Controller
         $profile = $education->profile;
         $education->delete();
 
-        return redirect()
-            ->route('profiles.show', $profile)
-            ->with('success', 'Education deleted successfully.');
+        return redirect()->route('profiles.show', $profile)->with('success', 'Education deleted successfully.');
     }
 }

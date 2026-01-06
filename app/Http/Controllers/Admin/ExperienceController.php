@@ -9,20 +9,26 @@ use App\Models\Profile;
 
 class ExperienceController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index(Profile $profile)
     {
-        return view('admin.experiences.index', [
-            'profile' => $profile,
-            'experiences' => $profile->experiences
-        ]);
+        //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create(Profile $profile)
     {
         $techstacks = $profile->techstacks;
         return view('admin.experiences.create', compact('profile', 'techstacks'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request, Profile $profile)
     {
         $data = $request->validate([
@@ -36,20 +42,15 @@ class ExperienceController extends Controller
         ]);
 
         $experience = $profile->experiences()->create($data);
-
         if (!empty($data['techstacks'])) {
-            echo "Attached techstacks: " . implode(',', $data['techstacks']);
             $experience->techstacks()->sync($request->input('techstacks'));
-            
         }
-
-        return redirect()
-            ->route('profiles.show', $profile)
-            ->with('success', 'Experience added');
+        return redirect()->route('profiles.show', $profile)->with('success', 'Experience successfully added.');
     }
-
-
-
+    
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Experience $experience)
     {
         $profiles = Profile::all();
@@ -57,6 +58,9 @@ class ExperienceController extends Controller
         return view('admin.experiences.edit', compact('experience', 'profiles', 'techstacks'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Experience $experience)
     {
         $validated = $request->validate([
@@ -69,12 +73,9 @@ class ExperienceController extends Controller
         ]);
 
         $experience->update($validated);
-
         $experience->techstacks()->sync($request->techstacks ?? []);
 
-        return redirect()
-            ->route('profiles.show', $experience->profile)
-            ->with('success', 'Experience updated successfully.');
+        return redirect()->route('profiles.show', $experience->profile)->with('success', 'Experience updated successfully.');
     }
 
 

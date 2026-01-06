@@ -52,14 +52,18 @@
     </div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 container mx-auto px-4">
+    <main class="flex-1 container mx-auto px-4 max-w-6xl">
+        <h2 class="text-3xl font-bold mb-6">@yield('page-title')</h2>
         @yield('content')
     </main>
 
     <!-- FOOTER (optional) -->
-    <footer class="bg-white shadow mt-6 py-4 text-center text-gray-500 text-sm">
+    <footer class="bg-white shadow mt-6 py-4 text-center text-gray-500 text-sm mt-8">
         &copy; {{ date('Y') }} Admin Panel
     </footer>
+
+    <!-- CONFIRMATION DELETE MODAL -->
+    <x-delete-modal />
 
 </body>
 </html>
