@@ -248,7 +248,7 @@
                     class="text-yellow-500 hover:text-yellow-700"
                     title="Edit Education"
                     aria-label="Edit Education">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5"/>
@@ -270,7 +270,7 @@
                                 data-message="Are you sure you want to delete the education '{{ $edu->school ?? 'Education' }}'? This action cannot be undone."
                                 title="Delete Education"
                                 aria-label="Delete Education">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862
@@ -344,21 +344,44 @@
                     @endif
                 </div>
 
-                <div class="flex gap-2 shrink-0">
+                <div class="flex gap-2 shrink-0 items-center">
+
+                    <!-- Edit project -->
                     <a href="{{ route('projects.edit', $project) }}"
-                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded transition">
-                        Edit
+                    class="text-yellow-500 hover:text-yellow-700"
+                    title="Edit Project"
+                    aria-label="Edit Project">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
                     </a>
 
-                    <form action="{{ route('projects.destroy', $project) }}" method="POST" class="relative">
+                    <!-- Delete project -->
+                    <form id="delete-project-{{ $project->id }}"
+                        action="{{ route('projects.destroy', $project) }}"
+                        method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded transition">
-                            Delete
+
+                        <button type="button"
+                                class="delete-btn text-red-500 hover:text-red-700 inline-flex items-center"
+                                data-form="delete-project-{{ $project->id }}"
+                                data-message="Are you sure you want to delete the project '{{ $project->name }}'? This action cannot be undone."
+                                title="Delete Project"
+                                aria-label="Delete Project">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862
+                                        a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22"/>
+                            </svg>
                         </button>
                     </form>
                 </div>
-
             </div>
         </div>
     @empty
