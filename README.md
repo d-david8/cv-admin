@@ -20,6 +20,5 @@ The application is designed to be clean, modular, and easy to extend, making it 
 
 - **Backend:** Laravel
 - **Frontend:** Blade + Tailwind CSS
-- **Database:** MySQL / MariaDB
-- **Authentication:** Laravel Auth
+- **Database:** MySQL
 - **Version Control:** Git & GitHub
