@@ -116,6 +116,7 @@
     @endif
 </div>
 
+
 <!-- Experiences -->
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
     <h2 class="text-2xl font-bold">Experiences</h2>
@@ -163,8 +164,9 @@
                         </div>
                     @endif
                 </div>
-                
+
                 <div class="flex gap-2 shrink-0">
+                    <!-- Edit experience -->
                     <a href="{{ route('experiences.edit', $exp) }}" class="text-yellow-500 hover:text-yellow-700" title="Edit">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -174,7 +176,8 @@
                                   d="M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/>
                         </svg>
                     </a>
-
+                    
+                    <!-- Delete experience-->
                     <form id="delete-exp-{{ $exp->id }}" 
                         action="{{ route('experiences.destroy', $exp) }}" 
                         method="POST" 
@@ -278,9 +281,7 @@
                             </svg>
                         </button>
                     </form>
-
                 </div>
-
             </div>
         </div>
     @empty

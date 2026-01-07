@@ -8,7 +8,7 @@
 
 <!-- Add a new profile -->
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
-    <a href="{{ route('profiles.create') }}" class="bg-green-600 hover:bg-green-700 text-white text-l px-5 py-2 rounded-lg shadow flex items-center gap-2"> 
+    <a href="{{ route('profiles.create') }}" class="bg-green-600 hover:bg-green-700 text-white text-l px-6 py-2 rounded-lg shadow flex items-center gap-2"> 
         +  Add a new profile
     </a>
 </div>
@@ -19,16 +19,16 @@
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
             <tr>
-                <th class="px-4 py-2 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th class="px-4 py-2 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th class="px-4 py-2 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                <th class="px-4 py-2 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th class="px-4 py-2 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th class="px-4 py-2 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th class="px-4 py-2 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th class="px-4 py-2 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                <th class="px-4 py-2 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th class="px-4 py-2 text-center text-lg font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
             @foreach($profiles as $profile)
-            <tr class="hover:bg-gray-50 text-xl">
+            <tr class="hover:bg-gray-50 text-lg">
                 <td class="px-4 py-2 ">{{ $profile->id }}</td>
                 <td class="px-4 py-2">{{ $profile->name }}</td>
                 <td class="px-4 py-2">{{ $profile->title }}</td>

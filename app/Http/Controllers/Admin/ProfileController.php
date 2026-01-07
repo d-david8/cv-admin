@@ -37,11 +37,11 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:profiles',
-            'title' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:50',
-            'linkedin' => 'nullable|string|max:255',
-            'github' => 'nullable|string|max:255',
-            'summary' => 'nullable|string',
+            'title' => 'required|string|max:255',
+            'phone' => 'required|string|max:50',
+            'linkedin' => 'required|string|max:255',
+            'github' => 'required|string|max:255',
+            'summary' => 'required|string',
         ]);
 
         Profile::create($request->all());

@@ -61,9 +61,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $profiles = Profile::all();
+        $profile = $project->profile;
         $techstacks = $project->profile->techstacks;
-        return view('admin.projects.edit', compact('project', 'profiles', 'techstacks'));
+        return view('admin.projects.edit', compact('project', 'profile', 'techstacks'));
     }
 
     /**

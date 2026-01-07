@@ -36,7 +36,7 @@ class ExperienceController extends Controller
             'role' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
             'techstacks' => 'nullable|array',
             'techstacks.*' => 'exists:techstacks,id',
         ]);
@@ -53,10 +53,11 @@ class ExperienceController extends Controller
      */
     public function edit(Experience $experience)
     {
-        $profiles = Profile::all();
+        $profile = $experience->profile;
         $techstacks = $experience->profile->techstacks;
-        return view('admin.experiences.edit', compact('experience', 'profiles', 'techstacks'));
+        return view('admin.experiences.edit', compact('experience', 'profile', 'techstacks'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,7 +69,7 @@ class ExperienceController extends Controller
             'role' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
             'techstacks' => 'array'
         ]);
 

@@ -35,7 +35,7 @@ class EducationController extends Controller
             'degree' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
         ]);
 
         $profile->educations()->create($data);
@@ -54,7 +54,7 @@ class EducationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Profile $profile, Education $education)
+    public function edit(Education $education)
     {
         $profile = $education->profile;
         return view('admin.educations.edit', compact('profile', 'education'));
@@ -70,7 +70,7 @@ class EducationController extends Controller
             'degree' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
         ]);
 
         $education->update($data);

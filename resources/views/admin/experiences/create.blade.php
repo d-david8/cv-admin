@@ -1,106 +1,98 @@
 @extends('layouts.admin')
 
-@section('title', 'Add Experience - ' . $profile->name)
+@section('title', 'Add experience - ' . $profile->name)
+
+@section('page-title', 'Add experience - ' . $profile->name)
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 py-6">
 
-    <!-- HEADER -->
-    <div class="flex items-center justify-between mb-6">
-        <h1 class="text-3xl font-bold">
-            Add Experience
-            <span class="text-gray-400 text-lg font-normal">
-                - {{ $profile->name }}
-            </span>
-        </h1>
+<!-- Header back-->
+<div class="flex flex-wrap gap-2 mt-2 md:mt-0 mb-8">
+    <a href="{{ route('profiles.show', $profile) }}"
+        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow transition">
+        ← Back
+    </a>
+</div>
 
-        <a href="{{ route('profiles.show', $profile) }}"
-           class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow">
-            ← Back
-        </a>
+
+<!-- Form-->
+<form action="{{ route('profiles.experiences.store', $profile) }}"
+        method="POST"
+        class="bg-white shadow rounded-2xl p-6 space-y-6">
+    @csrf
+
+    <!-- Company and role -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+            <label class="font-medium">Company <span class="text-red-500">*</span></label>
+            <input type="text" name="company"
+                    class="w-full border rounded-lg px-3 py-2"
+                    required>
+        </div>
+        <div>
+            <label class="font-medium">Role <span class="text-red-500">*</span></label>
+            <input type="text" name="role"
+                    class="w-full border rounded-lg px-3 py-2"
+                    required>
+        </div>
+
+        <!-- Dates -->
+        <div>
+            <label class="font-medium">Start date <span class="text-red-500">*</span></label>
+            <input type="date" name="start_date"
+                    class="w-full border rounded-lg px-3 py-2"
+                    required>
+        </div>
+        <div>
+            <label class="font-medium">End date</label>
+            <input type="date" name="end_date"
+                    class="w-full border rounded-lg px-3 py-2">
+        </div>
     </div>
 
-    <!-- ERRORS -->
-    @if ($errors->any())
-        <div class="bg-red-100 text-red-700 px-4 py-3 rounded-lg mb-6">
-            <ul class="list-disc pl-5 space-y-1">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <!-- Description-->
+    <div>
+        <label class="font-medium">Description <span class="text-red-500">*</span></label>
+        <textarea name="description"
+                  required
+                  rows="4"
+                  class="w-full border rounded-lg px-3 py-2"></textarea>
+    </div>
 
-    <!-- FORM -->
-    <form action="{{ route('profiles.experiences.store', $profile) }}"
-          method="POST"
-          class="bg-white shadow rounded-2xl p-6 space-y-6">
-        @csrf
+    <!-- Tech stack-->
+    <div>
+        <label class="font-medium block mb-2">Tech stack</label>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-                <label class="font-medium">Company</label>
-                <input type="text" name="company"
-                       class="w-full border rounded-lg px-3 py-2"
-                       required>
-            </div>
-
-            <div>
-                <label class="font-medium">Role</label>
-                <input type="text" name="role"
-                       class="w-full border rounded-lg px-3 py-2"
-                       required>
-            </div>
-
-            <div>
-                <label class="font-medium">Start Date</label>
-                <input type="date" name="start_date"
-                       class="w-full border rounded-lg px-3 py-2"
-                       required>
-            </div>
-
-            <div>
-                <label class="font-medium">End Date</label>
-                <input type="date" name="end_date"
-                       class="w-full border rounded-lg px-3 py-2">
-            </div>
-        </div>
-
-        <div>
-            <label class="font-medium">Description</label>
-            <textarea name="description"
-                      rows="4"
-                      class="w-full border rounded-lg px-3 py-2"></textarea>
-        </div>
-
-        <!-- TECH STACK SELECT -->
-        <div>
-            <label class="font-medium block mb-2">Tech Stack</label>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                @foreach($techstacks as $tech)
-                    <label class="flex items-center gap-2 bg-gray-50 border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-100">
-                        <input type="checkbox"
-                               name="techstacks[]"
-                               value="{{ $tech->id }}"
-                               class="rounded text-indigo-600">
-                        <span>
-                            {{ $tech->name }}
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            @foreach($techstacks as $tech)
+                <label class="flex items-center gap-2 bg-gray-50 border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-100">
+                    <input type="checkbox"
+                            name="techstacks[]"
+                            value="{{ $tech->id }}"
+                            class="rounded text-indigo-600">
+                    <span>
+                        {{ $tech->name }}
+                        @if($tech->level)
                             <span class="text-xs text-gray-500">
-                                ({{ $tech->level ?? '' }})
+                                ({{ $tech->level }})
                             </span>
-                        </span>
-                    </label>
-                @endforeach
-            </div>
+                        @endif
+                    </span>
+                </label>
+            @endforeach
         </div>
+    </div>
 
-        <div class="flex justify-end">
-            <button type="submit"
-                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow">
-                Save Experience
-            </button>
-        </div>
-    </form>
-</div>
+    <!-- Actions -->
+    <div class="flex flex-col sm:flex-row gap-3 pt-4">
+        <button type="submit"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow">
+            Save experience
+        </button>
+        <a href="{{ route('profiles.show', $profile) }}"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-center transition">
+            Cancel
+        </a>
+    </div>
+</form>
 @endsection

@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', $profile->name . ' - Tech Stack')
-@section('page-title', $profile->name . ' - Manage Tech Stack')
+@section('title', 'Manage tech stack - ' . $profile->name)
+
+@section('page-title', 'Manage tech stack - ' . $profile->name)
 
 @section('content')
 
-<!-- Back button -->
+<!-- Header back-->
 <div class="flex flex-wrap gap-2 mt-2 md:mt-0 mb-8">
     <a href="{{ route('profiles.show', $profile) }}"
         class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow transition">
@@ -13,7 +14,7 @@
     </a>
 </div>
 
-<!-- ADD TECH STACK -->
+<!-- Add techstack -->
 <div class="bg-white shadow rounded-2xl p-6 mb-6 mt-4">
     <form action="{{ route('profiles.techstacks.store', $profile) }}"
           method="POST"
@@ -21,7 +22,7 @@
         @csrf
 
         <!-- Technology name -->
-        <label for="name" class="sr-only">Technology Name</label>
+        <label for="name" class="sr-only">Technology name</label>
         <input id="name"
                type="text"
                name="name"
@@ -42,13 +43,13 @@
         </select>
 
         <button type="submit"
-                class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg shadow">
+                class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow">
             Add
         </button>
     </form>
 </div>
 
-<!-- TECH STACK LIST -->
+<!-- Tech stak list-->
 <div class="bg-white shadow rounded-2xl overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -85,8 +86,6 @@
                                          a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22"/>
                             </svg>
                         </button>
-
-                        <!-- Delete form -->
                         <form id="delete-form-{{ $tech->id }}"
                               action="{{ route('techstacks.destroy', $tech) }}"
                               method="POST"
@@ -108,7 +107,7 @@
     </table>
 </div>
 
-<!-- DELETE CONFIRMATION MODAL -->
+<!-- Delete confirmation modal -->
 <x-delete-modal />
 
 @endsection
