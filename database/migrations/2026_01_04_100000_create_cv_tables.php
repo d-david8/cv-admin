@@ -60,8 +60,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('link')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
             $table->timestamps();
 
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');

@@ -40,10 +40,10 @@
 </div>
 
 <!-- Profile information -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<div class="grid grid-cols-12 gap-6 mb-8">
 
     <!-- Contact information-->
-    <div class="bg-white rounded-2xl shadow p-6">
+    <div class="bg-white rounded-2xl shadow p-6 col-span-6 lg:col-span-6">
         <h2 class="text-xl font-semibold mb-4">Contact</h2>
         <ul class="space-y-3 text-s">
             <li class="flex justify-between">
@@ -82,7 +82,7 @@
     </div>
 
     <!-- Summary -->
-    <div class="bg-white rounded-2xl shadow p-6 lg:col-span-2">
+    <div class="bg-white rounded-2xl shadow p-6 col-span-8 lg:col-span-6">
         <h2 class="text-xl font-semibold mb-4">Summary</h2>
         <p class="text-gray-700 leading-relaxed text-s">
             {{ $profile->summary ?? 'No summary provided.' }}

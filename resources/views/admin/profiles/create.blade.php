@@ -85,7 +85,7 @@
             Save profile
         </button>
         <a href="{{ route('profiles.index') }}" 
-            class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-8 py-6 rounded-lg text-center transition">
+            class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-8 py-2 rounded-lg text-center transition">
             Cancel
         </a>
     </div>
